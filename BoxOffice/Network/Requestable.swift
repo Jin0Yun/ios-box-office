@@ -26,39 +26,7 @@ protocol Requestable {
     func toURLRequest() -> URLRequest?
 }
 
-struct APIConfig<R>: HTTPInteractable {
-    typealias Response = R
-    
-    let baseURL: String
-    let path: String
-    let headerParameters: [String: String]
-    let queryParameters: [String: Any]
-    let method: HTTPMethodType
-    let bodyParameters: [String: Any]
-    let bodyEncoder: BodyEncoder
-    let responseDecoder: ResponseDecoder
-    
-    init(baseURL: String,
-         path: String,
-         headerParameters: [String: String] = [:],
-         queryParameters: [String: Any] = [:],
-         method: HTTPMethodType = .get,
-         bodyParameters: [String: Any] = [:],
-         bodyEncoder: BodyEncoder = JSONBodyEncoder(),
-         responseDecoder: ResponseDecoder  = JSONResponseDecoder()
-     ) {
-        self.baseURL = baseURL
-        self.path = path
-        self.headerParameters = headerParameters
-        self.queryParameters = queryParameters
-        self.method = method
-        self.bodyParameters = bodyParameters
-        self.bodyEncoder = bodyEncoder
-        self.responseDecoder = responseDecoder
-    }
-}
-
-extension APIConfig {
+extension Requestable {
     private func toURL() -> URL? {
         var components = URLComponents()
         components.scheme = URLScheme.https.rawValue
@@ -91,5 +59,37 @@ protocol BodyEncoder {
 struct JSONBodyEncoder: BodyEncoder {
     func encode(_ parameters: [String: Any]) -> Data? {
         return try? JSONSerialization.data(withJSONObject: parameters)
+    }
+}
+
+struct APIConfig<R>: HTTPInteractable {
+    typealias Response = R
+    
+    let baseURL: String
+    let path: String
+    let headerParameters: [String: String]
+    let queryParameters: [String: Any]
+    let method: HTTPMethodType
+    let bodyParameters: [String: Any]
+    let bodyEncoder: BodyEncoder
+    let responseDecoder: ResponseDecoder
+    
+    init(baseURL: String,
+         path: String,
+         headerParameters: [String: String] = [:],
+         queryParameters: [String: Any] = [:],
+         method: HTTPMethodType = .get,
+         bodyParameters: [String: Any] = [:],
+         bodyEncoder: BodyEncoder = JSONBodyEncoder(),
+         responseDecoder: ResponseDecoder  = JSONResponseDecoder()
+     ) {
+        self.baseURL = baseURL
+        self.path = path
+        self.headerParameters = headerParameters
+        self.queryParameters = queryParameters
+        self.method = method
+        self.bodyParameters = bodyParameters
+        self.bodyEncoder = bodyEncoder
+        self.responseDecoder = responseDecoder
     }
 }
