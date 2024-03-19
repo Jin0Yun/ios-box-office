@@ -9,14 +9,7 @@ final class DefaultBoxOfficeRepository {
 }
 
 extension DefaultBoxOfficeRepository: BoxOfficeRepository {
-    func fetchBoxOfficeList(completion: @escaping (Result<BoxOffice, Error>) -> Void) -> URLSessionTask? {
-        return dataTransferService.request(with: API.boxOfficeAPI()) { result in
-            switch result {
-            case .success(let boxOfficeResponseDTO):
-                completion(.success(boxOfficeResponseDTO.boxOfficeResult.toModel()))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+    func fetchBoxOfficeList() async throws -> BoxOffice {
+        try await dataTransferService.request(with: API.boxOfficeAPI()).boxOfficeResult.toModel()
     }
 }

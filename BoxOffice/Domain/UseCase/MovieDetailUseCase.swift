@@ -2,7 +2,7 @@ import Foundation
 
 protocol MovieDetailUseCase {
     @discardableResult
-    func fetch(movieCode: String, completion: @escaping (Result<Movie, Error>) -> Void) -> URLSessionTask?
+    func fetch(movieCode: String) async throws -> Movie
 }
 
 final class DefaultMovieDetailUseCase: MovieDetailUseCase {
@@ -12,9 +12,7 @@ final class DefaultMovieDetailUseCase: MovieDetailUseCase {
         self.movieDetailRepository = movieDetailRepository
     }
     
-    func fetch(movieCode: String, completion: @escaping (Result<Movie, Error>) -> Void) -> URLSessionTask? {
-        return movieDetailRepository.fetchBoxOfficeList(movieCode: movieCode) { result in
-            completion(result)
-        }
+    func fetch(movieCode: String) async throws -> Movie {
+        return try await movieDetailRepository.fetchBoxOfficeList(movieCode: movieCode)
     }
 }

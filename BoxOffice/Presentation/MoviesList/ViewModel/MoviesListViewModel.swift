@@ -4,9 +4,10 @@ protocol ViewModel {
     associatedtype Input
     associatedtype Output
     
-    func transform(input: Input) -> Output
+    func transform(input: Input) async -> Output
 }
 
+@MainActor
 final class MoviesListViewModel: ViewModel {
     struct Input {
         var viewDidLoad: Observable<Void>
@@ -32,7 +33,7 @@ final class MoviesListViewModel: ViewModel {
     
     func transform(input: Input) -> Output {
         input.viewDidLoad.bind { [weak self] _ in
-            self?.viewDidLoad()
+           self?.viewDidLoad()
         }
         input.refresh.bind { [weak self] _ in
             self?.refresh()
@@ -46,27 +47,26 @@ final class MoviesListViewModel: ViewModel {
                      nowCellInformation: nowCellInformation)
     }
     
-    private func fetchData() {
-        useCase.fetch { [weak self] result in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(let boxOffice):
-                    self?.movies.value = boxOffice.movieBoxOfficeList
-                case .failure(let error):
-                    self?.errorMessage.value = error.localizedDescription
-                }
-                self?.isRefreshing.value = false
-            }
+    private func fetchData() async {
+        do {
+            movies.value = try await useCase.fetch().movieBoxOfficeList
+        } catch {
+            errorMessage.value = error.localizedDescription
         }
+        isRefreshing.value = false
     }
     
     private func viewDidLoad() {
-        fetchData()
+        Task {
+           await fetchData()
+        }
     }
     
     private func refresh() {
         isRefreshing.value = true
-        fetchData()
+        Task {
+            await fetchData()
+        }
     }
     
     private func loadCell(_ index: Int) {

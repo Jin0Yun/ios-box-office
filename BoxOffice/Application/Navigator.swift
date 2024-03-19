@@ -12,12 +12,11 @@ final class Navigator: NavigatorProtocol {
     }
     private let depengencyManager: DepengencyManager = DepengencyManager()
     
-    func initializeViewController(destination: Destination) -> UIViewController {
+    @MainActor func initializeViewController(destination: Destination) -> UIViewController {
         switch destination {
         case .movieList:
             let navigationController = UINavigationController(rootViewController: depengencyManager.makeMoviesListViewController(navigator: self))
             return navigationController
-            
         case .detailMovie(let movieCode, let movieName):
             return depengencyManager.makeMovieDetailViewController(navigator: self,
                                                                    movieCode: movieCode,
@@ -25,7 +24,7 @@ final class Navigator: NavigatorProtocol {
         }
     }
     
-    func navigate(to destination: Destination, from viewController: UIViewController) {
+    @MainActor func navigate(to destination: Destination, from viewController: UIViewController) {
         switch destination {
         case .movieList:
             viewController.dismiss(animated: true)

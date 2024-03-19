@@ -2,7 +2,7 @@ import Foundation
 
 protocol BoxOfficeUseCase {
     @discardableResult
-    func fetch(completion: @escaping (Result<BoxOffice, Error>) -> Void) -> URLSessionTask?
+    func fetch() async throws -> BoxOffice
 }
 
 final class DefaulBoxOfficeUseCase: BoxOfficeUseCase {
@@ -12,9 +12,7 @@ final class DefaulBoxOfficeUseCase: BoxOfficeUseCase {
         self.boxOfficeRepository = boxOfficeRepository
     }
     
-    func fetch(completion: @escaping (Result<BoxOffice, Error>) -> Void) -> URLSessionTask? {
-        return boxOfficeRepository.fetchBoxOfficeList { result in
-            completion(result)
-        }
+    func fetch() async throws -> BoxOffice {
+        return try await boxOfficeRepository.fetchBoxOfficeList()
     }
 }

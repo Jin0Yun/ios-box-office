@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 class MovieDetailViewModel: ViewModel {
     struct Input {
         var callMovieDetailEvent: Observable<Void>
@@ -51,27 +52,22 @@ class MovieDetailViewModel: ViewModel {
     }
     
     private func fetchMovieDetail(movieCode: String) {
-        detailUseCase.fetch(movieCode: movieCode) { [weak self] result in
-            switch result {
-            case .success(let movie):
-                DispatchQueue.main.async {
-                    self?.movieDetail.value = movie
-                }
-            case .failure(let error):
-                self?.errorMessage.value = error.localizedDescription
+        Task {
+            do {
+                movieDetail.value = try await detailUseCase.fetch(movieCode: movieCode)
+            } catch {
+                errorMessage.value = error.localizedDescription
             }
         }
+        
     }
     
     private func fetchMovieImage(movieName: String) {
-        imageUseCase.fetchMovieImage(movieName: movieName) { [weak self] result in
-            switch result {
-            case .success(let movieImage):
-                DispatchQueue.main.async {
-                    self?.movieImage.value = movieImage
-                }
-            case .failure(let error):
-                self?.imageErrorMessage.value = error.localizedDescription
+        Task {
+            do {
+                movieImage.value = try await imageUseCase.fetchMovieImage(movieName: movieName)
+            } catch {
+                errorMessage.value = error.localizedDescription
             }
         }
     }

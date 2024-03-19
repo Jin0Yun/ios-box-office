@@ -1,11 +1,10 @@
 import Foundation
 
 final class DepengencyManager {
-    private let sessionMananger = DefaultNetworkSessionManager()
-    private lazy var networkService = DefaultNetworkService(sessionManager: sessionMananger)
+    private lazy var networkService = DefaultNetworkService()
     private lazy var dataTransferService = DefaultDataTransferService(with: networkService)
     
-    func makeMoviesListViewController(navigator: Navigator) -> MoviesListViewController {
+    @MainActor func makeMoviesListViewController(navigator: Navigator) -> MoviesListViewController {
         let boxOfficeRepository = DefaultBoxOfficeRepository(dataTransferService: dataTransferService)
         let boxOfficeUseCase = DefaulBoxOfficeUseCase(boxOfficeRepository: boxOfficeRepository)
         let movieListViewModel = MoviesListViewModel(useCase: boxOfficeUseCase)
@@ -13,9 +12,9 @@ final class DepengencyManager {
                                         navigator: navigator)
     }
     
-    func makeMovieDetailViewController(navigator: Navigator,  
-                                       movieCode: String,
-                                       movieName: String) -> MovieDetailViewController {
+    @MainActor func makeMovieDetailViewController(navigator: Navigator,
+                                                  movieCode: String,
+                                                  movieName: String) -> MovieDetailViewController {
         let movieDetailRepository = DefaultMovieDetailRepository(dataTransferService: dataTransferService)
         let movieDetailUseCase = DefaultMovieDetailUseCase(movieDetailRepository: movieDetailRepository)
         let movieImageRepository = DefaultMovieImageRepository(dataTransferService: dataTransferService)

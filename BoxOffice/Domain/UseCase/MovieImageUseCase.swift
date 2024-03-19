@@ -2,7 +2,7 @@ import Foundation
 
 protocol MovieImageUseCase {
     @discardableResult
-    func fetchMovieImage(movieName: String, completion: @escaping (Result<MovieImage, Error>) -> Void) -> URLSessionTask?
+    func fetchMovieImage(movieName: String) async throws -> MovieImage
 }
 
 final class DefaulMovieImageUseCase: MovieImageUseCase {
@@ -12,7 +12,7 @@ final class DefaulMovieImageUseCase: MovieImageUseCase {
         self.movieImageRepository = movieImageRepository
     }
     
-    func fetchMovieImage(movieName: String, completion: @escaping (Result<MovieImage, Error>) -> Void) -> URLSessionTask? {
-        return movieImageRepository.fetchMovieImage(for: movieName, completion: completion)
+    func fetchMovieImage(movieName: String) async throws -> MovieImage {
+        return try await movieImageRepository.fetchMovieImage(for: movieName)
     }
 }

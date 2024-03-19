@@ -9,45 +9,28 @@ enum NetworkError: Error {
 }
 
 protocol NetworkService {
-    typealias CompletionHandler = (Result<Data?, NetworkError>) -> Void
-    
-    func request(apiConfig: any Requestable,
-                 completion: @escaping CompletionHandler) -> URLSessionTask?
+    func request(apiConfig: any Requestable) async throws -> Data?
 }
 
-final class DefaultNetworkService {
-    private let sessionManager: NetworkSessionManager
+final class DefaultNetworkService: NetworkService {
     
-    init(sessionManager: NetworkSessionManager = DefaultNetworkSessionManager()
-    ) {
-        self.sessionManager = sessionManager
-    }
-    
-}
-
-extension DefaultNetworkService: NetworkService {
-    
-    func request(apiConfig: any Requestable,
-                 completion: @escaping CompletionHandler) -> URLSessionTask? {
+    func request(apiConfig: any Requestable) async throws -> Data? {
         guard let urlRequest = apiConfig.toURLRequest() else {
             return nil
         }
-        let sessionDataTask = sessionManager.request(urlRequest) { [weak self] data, response, requestError in
-            if let requestError = requestError {
-                completion(.failure(self?.networkError(response, requestError, data) ?? .generic(requestError)))
-            } else {
-                completion(.success(data))
+        do {
+            let (data, response) = try await URLSession.shared.data(for: urlRequest)
+            if let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode != 200 {
+                throw NetworkError.error(statusCode: httpResponse.statusCode, data: data)
             }
+            return data
+        } catch {
+            throw networkError(error)
         }
-        return sessionDataTask
     }
     
-    private func networkError(_ urlResponse: URLResponse?,
-                              _ error: Error,
-                              _ data: Data?) -> NetworkError {
-        if let response = urlResponse as? HTTPURLResponse {
-            return .error(statusCode: response.statusCode, data: data)
-        }
+    private func networkError(_ error: Error) -> NetworkError {
         let code = URLError.Code(rawValue: (error as NSError).code)
         switch code {
         case .notConnectedToInternet:
