@@ -1,6 +1,8 @@
+import Reusable
+
 import UIKit
 
-final class MoviesListCell: UICollectionViewListCell {
+final class MoviesListCell: UICollectionViewListCell, Reusable {
     private let rankStackView = UIStackView().makeStackView(axis: .vertical, alignment: .center, spacing: 4)
     private let titleAndAudienceStackView = UIStackView().makeStackView(axis: .vertical, alignment: .fill, spacing: 4)
     private let titleLabel = UILabel().makeCellLabel(fontSize: 15, textColor: .black)
@@ -15,6 +17,15 @@ final class MoviesListCell: UICollectionViewListCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = ""
+        rankLabel.text = ""
+        changeLabel.text = ""
+        changeLabel.textColor = .white
+        audienceLabel.text = ""
     }
 }
 
@@ -41,11 +52,52 @@ extension MoviesListCell {
         ])
     }
     
-    func configure(with cellInformaition: (String, String, String, UIColor, String)) {
-        titleLabel.text = cellInformaition.0
-        rankLabel.text = cellInformaition.1
-        changeLabel.text = cellInformaition.2
-        changeLabel.textColor = cellInformaition.3
-        audienceLabel.text = cellInformaition.4
+    func configure(_ movie: MovieBoxOffice) {
+        titleLabel.text = {
+            var text = movie.movieName
+            if text.count > 20 {
+                let index = text.index(text.startIndex, offsetBy: 20)
+                text = String(text[..<index]) + "..."
+                return text
+            }
+            return text
+        }()
+        rankLabel.text = {
+            return "\(movie.rank)"
+        }()
+        changeLabel.text = {
+            if movie.rankChangesWithPreviousDay > 0 {
+                return "▲\(movie.rankChangesWithPreviousDay)"
+            }
+            if movie.rankChangesWithPreviousDay < 0 {
+                return "▼\(abs(movie.rankChangesWithPreviousDay))"
+            }
+            if movie.rankOldAndNew == .new {
+                return "신작"
+            }
+            return "-"
+        }()
+        changeLabel.textColor = {
+            if movie.rankOldAndNew == .new {
+                return .red
+            }
+            if movie.rankChangesWithPreviousDay > 0 {
+                return .red
+            }
+            if movie.rankChangesWithPreviousDay < 0 {
+                return .blue
+            }
+            return .gray
+        }()
+        audienceLabel.text = {
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            let formattedAudienceCount = formatter.string(from: NSNumber(value: movie.audienceCount)) ?? "\(movie.audienceCount)"
+            let formattedAccumulation = formatter.string(from: NSNumber(value: movie.audienceAccumulation)) ?? "\(movie.audienceAccumulation)"
+            return "오늘 \(formattedAudienceCount) / 총 \(formattedAccumulation)"
+        }()
+        selectedBackgroundView = UIView()
+        selectedBackgroundView?.backgroundColor = .clear
+        accessories = [.disclosureIndicator()]
     }
 }

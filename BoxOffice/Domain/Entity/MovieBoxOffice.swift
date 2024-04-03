@@ -1,6 +1,6 @@
 import Foundation
 
-struct MovieBoxOffice {
+struct MovieBoxOffice: Equatable {
     let rank: Int
     let rankChangesWithPreviousDay: Int
     let rankOldAndNew: RankOldAndNew
