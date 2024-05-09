@@ -83,13 +83,13 @@ extension MoviesListViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoviesListCell.className, for: indexPath) as? MoviesListCell else {
             fatalError("MoviesListCell 에러")
         }
-        output.nowCellInformation.bind { cellInformation in
-            cell.configure(with: cellInformation)
+        output.movie.bind { movie in
+            guard let movie else {
+                return
+            }
+            cell.configure(movie)
         }
         input.loadCell.value = indexPath.row
-        cell.selectedBackgroundView = UIView()
-        cell.selectedBackgroundView?.backgroundColor = .clear
-        cell.accessories = [.disclosureIndicator()]
         return cell
     }
     

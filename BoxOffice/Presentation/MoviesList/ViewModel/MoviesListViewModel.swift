@@ -18,14 +18,14 @@ final class MoviesListViewModel: ViewModel {
         var movies: Observable<[MovieBoxOffice]>
         var errorMessage: Observable<String>
         var isRefreshing: Observable<Bool>
-        var nowCellInformation: Observable<(String, String, String, UIColor, String)>
+        var movie: Observable<MovieBoxOffice?>
     }
     
     private let useCase: BoxOfficeUseCase
     private var movies: Observable<[MovieBoxOffice]> = Observable([])
     private var errorMessage: Observable<String> = Observable("")
     private var isRefreshing: Observable<Bool> = Observable(false)
-    private var nowCellInformation: Observable<(String, String, String, UIColor, String)> = Observable(("", "", "", .white, ""))
+    private var movie: Observable<MovieBoxOffice?> = Observable(nil)
     
     init(useCase: BoxOfficeUseCase) {
         self.useCase = useCase
@@ -44,7 +44,7 @@ final class MoviesListViewModel: ViewModel {
         return .init(movies: movies,
                      errorMessage: errorMessage,
                      isRefreshing: isRefreshing,
-                     nowCellInformation: nowCellInformation)
+                     movie: movie)
     }
     
     private func fetchData() async {
@@ -70,51 +70,6 @@ final class MoviesListViewModel: ViewModel {
     }
     
     private func loadCell(_ index: Int) {
-        let movie = movies.value[index]
-        var movieName: String {
-            var text = movie.movieName
-            if text.count > 20 {
-                let index = text.index(text.startIndex, offsetBy: 20)
-                text = String(text[..<index]) + "..."
-                return text
-            }
-            return text
-        }
-        var rank: String {
-            return "\(movie.rank)"
-        }
-        var rankChangeText: String {
-            if movie.rankChangesWithPreviousDay > 0 {
-                return "▲\(movie.rankChangesWithPreviousDay)"
-            }
-            if movie.rankChangesWithPreviousDay < 0 {
-                return "▼\(abs(movie.rankChangesWithPreviousDay))"
-            }
-            if movie.rankOldAndNew == .new {
-                return "신작"
-            }
-            return "-"
-        }
-        var rankChangeColor: UIColor {
-            if movie.rankOldAndNew == .new {
-                return .red
-            }
-            if movie.rankChangesWithPreviousDay > 0 {
-                return .red
-            }
-            if movie.rankChangesWithPreviousDay < 0 {
-                return .blue
-            }
-            return .gray
-        }
-        var audienceText: String {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            let formattedAudienceCount = formatter.string(from: NSNumber(value: movie.audienceCount)) ?? "\(movie.audienceCount)"
-            let formattedAccumulation = formatter.string(from: NSNumber(value: movie.audienceAccumulation)) ?? "\(movie.audienceAccumulation)"
-            return "오늘 \(formattedAudienceCount) / 총 \(formattedAccumulation)"
-        }
-        let cellInformation = (movieName, rank, rankChangeText, rankChangeColor, audienceText)
-        nowCellInformation.value = cellInformation
+        movie.value = movies.value[index]
     }
 }
