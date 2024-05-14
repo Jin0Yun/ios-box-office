@@ -43,7 +43,13 @@
 
 ### 스크린샷
 <table>
+  <table>
   <tr>
+    <tr>
+    <th><code>박스오피스 CollectionView</code></th>
+    <th><code>RefreshController</code></th>
+    <th><code>기능설명</code></th>
+  </tr>
     <td>
       <img src="https://github.com/tasty-code/ios-box-office/assets/133867430/d7014c97-50bd-4a80-8f8c-6a3dd18e2107" width="300" height="500" >
     </td>
@@ -58,6 +64,11 @@
     </td>
   </tr>
   <tr>
+    <tr>
+    <th><code>Image Cache 전</code></th>
+    <th><code>Image Cache 후</code></th>
+    <th><code>기능설명</code></th>
+  </tr>
     <td>
       <img src="https://github.com/tasty-code/ios-box-office/assets/133867430/200c611e-cc33-481c-a948-cf50db41a1b9" width="300" height="500" >
     </td>
