@@ -20,9 +20,9 @@
 ### 개발환경 및 활용한 기술
 | 개발언어 및 환경 | 협업도구 | 기술스택 | 
 | --- | --- |--- |
-| Swift | Notion, Github, Discord | SwiftLint |
-| UIKit |   | MVVM-C |
-| Xcode 17.0 |  | Input-Output |
+| Swift | Notion | SwiftLint |
+| UIKit | Github  | MVVM-C |
+| Xcode 17.0 | Discord | Input-Output |
 |   |   | Navigator |
 |   |   | Observable |
 |   |   | Completion Handler → async - await |
@@ -65,7 +65,7 @@
       CollectionView로 영화 상세정보를 구현했습니다.<br><br>
       <strong>Indicator</strong><br>
       이미지가 로득되기 전에 이미지가 로드중임을 알 수 있도록 indicator를 구현했습니다.<br><br>
-      <strong>이미지 캐싱</strong><br>
+      <strong>Image caching</strong><br>
       한 번 로드된 이미지는 캐시를 통해 빠르게 로드될 수 있도록 구현했습니다.<br><br>
     </td>
   </tr>
@@ -96,7 +96,7 @@
 
 ### CollectionView
 - CollectionView를 활용한 영화 목록 및 상세 정보 UI 구현
-- 인디케이터 및 리프레시 컨트롤러를 활용해 로드중 및 새로고침 UI 구현
+- `UIActivityIndicatorView` 및 `UIRefreshControl`를 활용해 로드 중 및 새로고침 UI 구현
 
 ## Migration
 
