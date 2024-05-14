@@ -8,8 +8,10 @@
 3. [프로젝트 구조](#프로젝트-구조)
 4. [스크린샷](#스크린샷)
 5. [학습 내용](#학습-내용)
-6. [Migration](#migration)
-7. [팀원소개](#팀원소개)
+6. [PR Point](#pr-point)
+7. [Trouble Shooting](#trouble-shooting)
+8. [팀원소개](#팀원소개)
+
 
 ## 프로젝트 목표
 
@@ -98,10 +100,20 @@
 - CollectionView를 활용한 영화 목록 및 상세 정보 UI 구현
 - `UIActivityIndicatorView` 및 `UIRefreshControl`를 활용해 로드 중 및 새로고침 UI 구현
 
-## Migration
+### Migration
 
 - ViewModel → ViewModel with InputOutput Pattern - 양방향 바인딩
 - 비동기 처리 마이그레이션(`Completion Handler` → `Swift Concurrency`)
+
+## PR Point 
+
+- [STEP1](https://github.com/tasty-code/ios-box-office/pull/31)
+- [STEP2](https://github.com/tasty-code/ios-box-office/pull/38)
+- [STEP3](https://github.com/tasty-code/ios-box-office/pull/48)
+
+## Trouble Shooting
+
+-
 
 ## 팀원소개
 
