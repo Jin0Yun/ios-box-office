@@ -19,6 +19,7 @@
 - HTTP 통신을 처리할 수 있는 네트워크 모듈 생성
 - Swift Concurrency 학습 및 적용
 
+
 ### 개발환경 및 활용한 기술
 | 개발언어 및 환경 | 협업도구 | 기술스택 | 
 | --- | --- |--- |
@@ -38,6 +39,7 @@
 - `Domain`: Entity, Use Case, Repository Interface
 - `Data`: Repository
 - 의존성의 방향이 안쪽 방향으로만(`Domain`) 향하게 하고 안쪽에서 바깥 방향으로는 의존하지 않는 구조
+<img width="1485" alt="스크린샷 2024-05-14 오후 8 11 23" src="https://github.com/Jin0Yun/ios-box-office/assets/47639904/1fa06226-e18e-46d6-a56e-40f2d056596f">
 
 ### 스크린샷
 <table>
