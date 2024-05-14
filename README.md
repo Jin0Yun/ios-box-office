@@ -1,6 +1,7 @@
 ## 박스오피스 프로젝트
-> 일별 박스오피스 정보 및 영화 상세정보를 확인할 수 있어요
+> 일별 박스오피스 정보 및 영화 상세정보를 확인할 수 있는 앱
 > 
+> 프로젝트기간: 2024.02.13 ~ 2024.03.15 (6주간)
 
 ## 목차
 1. [프로젝트 목표](#프로젝트-목표)
@@ -28,7 +29,7 @@
 | Xcode 17.0 | Discord | Input-Output |
 |   |   | Navigator |
 |   |   | Observable |
-|   |   | Completion Handler → async - await |
+|   |   | Completion Handler → Swift Concurrency |
 |   |   | TDD |
   
 ### 프로젝트 구조
@@ -51,10 +52,10 @@
     <th><code>기능설명</code></th>
   </tr>
     <td>
-      <img src="https://github.com/tasty-code/ios-box-office/assets/133867430/d7014c97-50bd-4a80-8f8c-6a3dd18e2107" width="300" height="500" >
+      <img src="https://github.com/tasty-code/ios-box-office/assets/133867430/d7014c97-50bd-4a80-8f8c-6a3dd18e2107" width="250" height="500" >
     </td>
     <td>
-      <img src="https://github.com/tasty-code/ios-box-office/assets/133867430/aa3b37e8-8236-4439-94d5-80654028fcbe" width="300" height="500">
+      <img src="https://github.com/tasty-code/ios-box-office/assets/133867430/aa3b37e8-8236-4439-94d5-80654028fcbe" width="250" height="500">
     </td>
     <td>
       <strong>일별 박스오피스</strong><br>
@@ -70,10 +71,10 @@
     <th><code>기능설명</code></th>
   </tr>
     <td>
-      <img src="https://github.com/tasty-code/ios-box-office/assets/133867430/200c611e-cc33-481c-a948-cf50db41a1b9" width="300" height="500" >
+      <img src="https://github.com/tasty-code/ios-box-office/assets/133867430/200c611e-cc33-481c-a948-cf50db41a1b9" width="250" height="500" >
     </td>
     <td>
-      <img src="https://github.com/tasty-code/ios-box-office/assets/133867430/608262f2-c0a4-4b91-b42d-b38283026b1d" width="300" height="500">
+      <img src="https://github.com/tasty-code/ios-box-office/assets/133867430/608262f2-c0a4-4b91-b42d-b38283026b1d" width="250" height="500">
     </td>
      <td>
       <strong>영화 상세화면</strong><br>
@@ -132,5 +133,5 @@
 
 | 윤진영([yuni](https://github.com/Jin0Yun)) | 장우석([sidi](https://github.com/jus1234)) |
 | --- | --- |
-| <img src = "https://github.com/tasty-code/ios-box-office/assets/133867430/efcdf5c8-efb8-42ce-8992-0ff16ce266a2" width="200"> | <img src = "https://github.com/tasty-code/ios-box-office/assets/133867430/fd03b3e7-bbd2-411f-b8fb-dd9970cc9dfb." width="200"> |
+| <img src = "https://github.com/tasty-code/ios-box-office/assets/133867430/efcdf5c8-efb8-42ce-8992-0ff16ce266a2" width="200" height="240"> | <img src = "https://github.com/tasty-code/ios-box-office/assets/133867430/fd03b3e7-bbd2-411f-b8fb-dd9970cc9dfb." width="200" height="240"> |
 
