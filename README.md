@@ -25,7 +25,7 @@
 | 개발언어 및 환경 | 협업도구 | 기술스택 | 
 | --- | --- |--- |
 | Swift | Notion | SwiftLint |
-| UIKit | Github  | MVVM-C |
+| UIKit | Github  | MVVM |
 | Xcode 17.0 | Discord | Input-Output |
 |   |   | Navigator |
 |   |   | Observable |
