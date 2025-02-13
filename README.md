@@ -125,10 +125,6 @@
 - [STEP2](https://github.com/tasty-code/ios-box-office/pull/38)
 - [STEP3](https://github.com/tasty-code/ios-box-office/pull/48)
 
-## Trouble Shooting
-
--
-
 ## 팀원소개
 
 | 윤진영([yuni](https://github.com/Jin0Yun)) | 장우석([sidi](https://github.com/jus1234)) |
